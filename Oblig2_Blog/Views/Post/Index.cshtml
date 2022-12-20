@@ -1,0 +1,41 @@
+﻿@model IEnumerable<Oblig2_Blog.Models.Entities.Post>
+
+@{
+    ViewData["Title"] = "Index";
+}
+<div class="container p-3">
+    <div class="row pt-4">
+        <div class="col-6">
+            <h2 class="text-primary">Alle innlegg</h2>
+        </div>
+    </div>
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr class="invisible">
+            <th>
+            </th>
+            <th>
+            </th>
+        </tr>
+        </thead>
+        <tbody>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    <h5>
+                        @Html.DisplayFor(modelItem => item.PostTitle)
+                    </h5>
+                </td>
+                <td>
+                    <div class="col-auto">
+                        <a asp-controller="Post" asp-action="Details" asp-route-id="@item.PostId"
+                           class="btn btn-primary mx-2">Les innlegg <i class="fa fa-angle-double-right"></i></a>
+                    </div>
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+</div>

@@ -1,0 +1,94 @@
+﻿@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using Microsoft.AspNetCore.Identity
+@model IEnumerable<Oblig2_Blog.Models.ViewModels.BlogViewModel>
+
+@inject UserManager<IdentityUser> UserManager
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+
+<div class="container p-3">
+    <div class="row pt-4">
+        <div class="col-6">
+            <h2 class="text-primary">Alle blogger</h2>
+        </div>
+        @if (User.IsInRole("Blogger"))
+        {
+            <div class="col-6 text-end">
+                <a asp-controller="Blog" asp-action="Create" class="btn btn-info text-white">
+                    <i class="fa fa-edit"></i> Ny blogg
+                </a>
+            </div>
+        }
+    </div>
+    <br /><br />
+
+    <table class="table table-bordered table-striped" style="width:100%">
+        <thead>
+        <tr>
+            <th>
+                Blogg navn
+            </th>
+            <th>
+                Blogg beskrivelse
+            </th>
+            <th>
+                Blogger
+            </th>
+            <th>
+                Aktiv blogg
+            </th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach(var blog in Model)
+        {
+            <tr>
+                <td>
+                    @blog.BlogTitle
+                </td>
+                <td>
+                    @blog.Description
+                </td>
+                <td>
+                    @if(@blog.OwnerId == null)
+                    {
+                        <span>
+                            Blogg ble seeded.
+                        </span>
+                    }
+                    else 
+                    {
+                        <span>
+                            @blog.Username
+                        </span>
+                    }
+                </td>
+
+                <td>
+                    @if (blog.CanPost)
+                    {
+                        <span>&#10004;</span>
+                    }
+                    else
+                    {
+                        <span>&#10006;</span>
+                    }
+                
+                </td>
+                <td>
+                    <div class="w-75 btn-group" role="group">
+                        <a asp-controller="Blog" asp-action="Details" asp-route-id="@blog.BlogId"
+                           class="btn btn-primary mx-2"> Se blogg <i class="fa fa-angle-double-right"></i></a>
+                    </div>
+                </td>
+            </tr>
+        }
+        </tbody>
+
+    </table>
+</div>
+

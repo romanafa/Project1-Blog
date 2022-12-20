@@ -1,0 +1,31 @@
+﻿@model Oblig2_Blog.Models.Entities.Comment
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h2>Slett kommentar</h2>
+<br />
+<h3>Vil du slette denne kommentaren?</h3>
+
+<div>
+    <hr />
+    <dl class="row">
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.CommentText)
+        </dd>
+        <dt class="col-sm-2">
+            Opprettet:
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Created)
+        </dd>
+    </dl>
+
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="PostId" />
+        <input type="hidden" asp-for="CommentId" />
+        <input type="submit" value="Slett" class="btn btn-danger" /> |
+        <a asp-controller="Post" asp-action="Details" asp-route-id="@Model.PostId">Tilbake</a>
+    </form>
+</div>

@@ -1,0 +1,45 @@
+﻿@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model Oblig2_Blog.Models.Entities.Tag
+
+@{
+    ViewData["Title"] = "All tags";
+    var tags = ViewBag.Tags;
+}
+
+<h4>Klikk på tagg for å vise alle relaterte innlegg</h4>
+<br />
+@foreach (var item in @tags)
+{
+    <input asp-route-id="@item.TagId" type="button" id="tagButton" class="text-white btn btn-info btn-sm" name="@item.TagId" value="#@item.TagName" />
+}
+
+<br />
+<br />
+<hr />
+<div id="postsByTagPartialView"></div>
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="~/js/site.js" asp-append-version="true"></script>
+<script type="text/javascript">
+
+    // Script to populate partial view to show all posts by chosen id
+    $(document).ready(function () {
+        $('[id*=tagButton]').on('click', function () {
+            $.ajax({
+                url: '@Url.Action("PostsByTags", "Tag")',
+                dataType: "html",
+                data: { "id": $(this).attr('name') },
+                type: "GET",
+                contentType: "application/json",
+                success: function (response) {
+                    $('#postsByTagPartialView').html(response);
+                },
+                error: function (err) {
+                    alert(err.responseText);
+                }
+            });
+        });
+    });
+
+</script>

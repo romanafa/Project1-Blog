@@ -1,0 +1,96 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+
+@*@model Oblig2_Blog.Models.Entities.Post*@
+@model Oblig2_Blog.Models.ViewModels.PostViewModel
+@inject UserManager<IdentityUser> UserManager;
+
+@{
+    ViewData["Title"] = "Details";
+
+    var tags = ViewBag.PostWithTags;
+}
+
+<div>
+    <div class="row">
+        <div class="col-sm-10">
+            <h3>@Model.PostTitle</h3>
+        </div>
+        <div class="col text-end">
+            <a class="btn btn-secondary text-white" asp-action="Details" asp-controller="Blog" asp-route-id="@Model.BlogId">
+                <i class="fa fa-angle-double-left"></i>
+                Blog
+            </a>
+        </div>
+        <div class="row">
+            <p class="col" style="font-size: small">
+                Blogger: @Html.DisplayFor(model => model.Username)
+            </p>
+            <p class="col text-end" style="font-size: small">
+                Opprettet: @Html.DisplayFor(model => model.Created)
+            </p>
+        </div>
+    </div>
+    <hr />
+    <div class="row">
+        <div>
+            @Html.DisplayFor(model => model.PostText)
+        </div>
+        <br/>
+        
+    </div>
+</div>
+<br />
+@if (Model.Tags != null)
+{
+    <div class="container">
+    @foreach (var tag in Model.Tags)
+    {
+            <button type="button" id="tagButton" class="btn btn-outline-info btn-sm">#@tag.TagName</button>
+    }
+    </div>
+}
+
+<br />
+<div class=container>
+    <div class="row justify-content-start">
+        @if (UserManager.GetUserId(User) == Model.OwnerId)
+        {
+            <div class="col-auto">
+                <a asp-controller="Post" asp-action="Edit" asp-route-id="@Model.PostId"
+                   class="btn btn-primary mx-2"><i class="fa fa-pencil"></i> Rediger</a>
+            </div>
+        }
+        @if (UserManager.GetUserId(User) == Model.OwnerId || User.IsInRole("Admin"))
+        {
+            <div class="col-auto">
+                <a asp-controller="Post" asp-action="Delete" asp-route-id="@Model.PostId"
+                   class="btn btn-danger"><i class="fa fa-trash"></i> Slett</a>
+            </div>
+        }
+    </div>
+</div>
+<br />
+<br />
+<br />
+
+<div class="row">
+    <div class="col">
+        <h3>Kommentarer</h3>
+    </div>
+    <div class="col-6 text-end">
+        <a onclick="showInCommentPopUp('@Url.Action("Create","Comment",new { postId = Model.PostId},Context.Request.Scheme )','Ny kommentar')" class="btn btn-success text-white" data-post-id="@Model.PostId"><i class=" fa-solid fa-comment"></i> Ny kommentar</a>
+    </div>
+</div>
+<br />
+
+@if (Model.Comments != null)
+{
+    <div id="view-all">
+        @await Html.PartialAsync("~/Views/Comment/_ViewAllComments.cshtml", Model.Comments)
+    </div>
+}
+else
+{
+    <h5>Ingen kommentarer</h5>
+}

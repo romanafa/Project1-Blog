@@ -1,0 +1,32 @@
+﻿@model IEnumerable<Oblig2_Blog.Models.Entities.Tag>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<p>
+    <a asp-controller="Tag" asp-action="Create" class="btn btn-info text-white">Ny tagg</a>
+</p>
+<table class="table">
+    <thead>
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.TagName)
+        </th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.TagName)
+            </td>
+            <td>
+                <a asp-controller="Tag" asp-action="Delete" asp-route-id="@item.TagId"
+                   class="btn btn-danger mx-2"><i class="fa fa-trash"></i> Slett</a>
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>

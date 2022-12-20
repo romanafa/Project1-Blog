@@ -1,0 +1,45 @@
+﻿@model Oblig2_Blog.Models.ViewModels.BlogViewModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h3>Ny blogg</h3>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <input hidden asp-for="BlogId"/>
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="form-group">
+                <label class="control-label">Blogg navn</label>
+                <input asp-for="BlogTitle" class="form-control"/>
+                <span asp-validation-for="BlogTitle" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Beskrivelse</label>
+                <input asp-for="Description" class="form-control"/>
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Kan legge til nye innlegg</label>
+                <input asp-for="CanPost" type="checkbox" checked/>
+            </div>
+
+
+            <div class="form-group">
+                <input type="submit" value="Lagre" class="btn btn-primary"/>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Tilbake til alle blogger</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

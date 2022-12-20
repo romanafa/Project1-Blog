@@ -1,0 +1,36 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model IEnumerable<Oblig2_Blog.Models.Entities.Comment>
+
+@inject UserManager<IdentityUser> UserManager;
+
+@foreach (var comment in Model)
+{
+    <div style="border-style: inset; padding: 2%;">
+        <br/>
+        <p><i class="fa fa-commenting"></i> @comment.CommentText </p>
+        <br/>
+        <p style="font-size: small">Skrevet: @comment.Created</p>
+        <p style="font-size: small">Av: @comment.Username</p>
+        <div class="row justify-content-start">
+
+        @if (UserManager.GetUserId(User) == comment.OwnerId)
+        {
+            <div class="col-auto">
+                <a onclick="showInCommentPopUp('@Url.Action("Edit", "Comment", new { id = comment.CommentId }, Context.Request.Scheme)', 'Oppdater kommentar')" class="btn btn-primary" data-post-id="@comment.PostId">
+                    <i class="fa fa-pencil"></i> Rediger
+                </a>
+            </div>
+        }
+        @if (UserManager.GetUserId(User) == comment.OwnerId || User.IsInRole("Admin"))
+        {
+            <div class="col-auto">
+                <a asp-controller="Comment" asp-action="Delete" asp-route-id="@comment.CommentId"class="btn btn-danger">
+                    <i class="fa fa-trash"></i> Slett
+                </a>
+            </div>
+        }
+        </div>
+    </div>
+
+}

@@ -1,0 +1,33 @@
+﻿@model Oblig2_Blog.Models.Entities.Post
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h3>Oppdater innlegg</h3>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <input type="hidden" asp-for="PostId" />
+            <input type="hidden" asp-for="BlogId" />
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="form-group">
+                <label class="control-label">Innlegg tittel</label>
+                <input asp-for="PostTitle" class="form-control" />
+                <span asp-validation-for="PostTitle" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Innlegg tekst</label>
+                <input asp-for="PostText" class="form-control" />
+                <span asp-validation-for="PostText" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Lagre" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+

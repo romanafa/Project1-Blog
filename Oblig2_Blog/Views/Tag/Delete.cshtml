@@ -1,0 +1,23 @@
+﻿@model Oblig2_Blog.Models.Entities.Tag
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<br />
+<h5>Vil du slette denne taggen?</h5>
+<hr />
+<div>
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.TagName)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.TagName)
+        </dd>
+    </dl>
+    <form asp-action="Delete">
+        <input type="submit" value="Slett" class="btn btn-danger" /> |
+        <a class="btn btn-secondary text-white" asp-action="Index"><i class="fa fa-angle-double-left"></i> Tilbake</a>
+    </form>
+</div>

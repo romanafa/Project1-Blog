@@ -1,0 +1,31 @@
+﻿@model Oblig2_Blog.Models.ViewModels.TagViewModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Ny tagg</h1>
+
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="TagName" class="control-label"></label>
+                <input asp-for="TagName" class="form-control" />
+                <span asp-validation-for="TagName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Lagre" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a class="btn btn-secondary text-white" asp-action="Index"><i class="fa fa-angle-double-left"></i> Alle tagger</a>
+</div>
+
+@section Scripts {
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -1,0 +1,38 @@
+﻿@model Oblig2_Blog.Models.ViewModels.PostViewModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h3>Ny innlegg</h3>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <input asp-for="BlogId" readonly hidden />
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label class="control-label">Innlegg tittel</label>
+                <input asp-for="PostTitle" class="form-control" />
+                <span asp-validation-for="PostTitle" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Innlegg tekst</label>
+                <input asp-for="PostText" class="form-control" />
+                <span asp-validation-for="PostText" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Lagre" class="btn btn-primary" id="createPost"/>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Details" asp-controller="Blog" asp-route-id="BlogId">Tilbake til blogg</a>
+</div>
+
+@section Scripts {
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

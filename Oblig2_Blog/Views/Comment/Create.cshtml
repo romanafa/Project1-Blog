@@ -1,0 +1,37 @@
+﻿@using Oblig2_Blog.Models.Entities
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model Oblig2_Blog.Models.ViewModels.CommentViewModel
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = null;
+
+    var postTitle = ViewBag.PostTitle;
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <form asp-action="Create" onsubmit="return jQueryAjaxPost(this);">
+            <input asp-for="PostId" readonly hidden />
+            <input asp-for="BlogId" readonly hidden />
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label class="control-label">Kommentar </label>
+                <p id="postTitle" class="invisible">@postTitle</p>
+                <input asp-for="CommentText" class="form-control" />
+                <span asp-validation-for="CommentText" class="text-danger"></span>
+            </div>
+            <br />
+            <div class="form-group">
+                <input type="submit" value="Lagre" class="btn btn-primary btn-block" id="createComment" data-post-title="2"/>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
